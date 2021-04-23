@@ -1,5 +1,3 @@
-from importlib import import_module
-#import os
 from src.utils import hdfs_utils
 from src.utils.config import config
 from src.model.payment_type_struct import payment_type_struct

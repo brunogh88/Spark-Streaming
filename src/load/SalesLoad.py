@@ -1,6 +1,6 @@
 from pyspark.sql import functions as F
 from importlib import import_module
-config = import_module("src.utils.config").config
+from src.utils.config import config
 from src.model.sales_struct import sales_struct
 
 class SalesLoad(object):

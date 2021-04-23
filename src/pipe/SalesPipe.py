@@ -1,22 +1,20 @@
-from importlib import import_module
 from pyspark.sql import functions as F
 
-sales_load = import_module("src.load.SalesLoad").SalesLoad
-#from src.load import SalesLoad
-sales_save = import_module("src.save.SalesSave").SalesSave
-sales_quality = import_module("src.quality.SalesQuality").SalesQuality
-payment_type_load = import_module("src.load.PaymentTypeLoad").PaymentTypeLoad
-join_sales_payment_type = import_module("src.process.JoinSalesAndPaymentType").JoinSalesAndPaymentType
+from src.load.SalesLoad import SalesLoad
+from src.save.SalesSave import SalesSave
+from src.quality.SalesQuality import SalesQuality
+from src.load.PaymentTypeLoad import PaymentTypeLoad
+from src.process.JoinSalesAndPaymentType import JoinSalesAndPaymentType
 
 class SalesPipe(object):
     """Classe que contém todos os passos para a pipe SALES"""
 
     def __init__(self, spark):
-        self.sales_load = sales_load(spark)
-        self.sales_save = sales_save(spark)
-        self.sales_quality = sales_quality(spark)
-        self.payment_type_load = payment_type_load(spark)
-        self.join_sales_payment_type = join_sales_payment_type(spark)
+        self.sales_load = SalesLoad(spark)
+        self.sales_save = SalesSave(spark)
+        self.sales_quality = SalesQuality(spark)
+        self.payment_type_load = PaymentTypeLoad(spark)
+        self.join_sales_payment_type = JoinSalesAndPaymentType(spark)
 
     def start(self):
         df_sales = self.sales_load.read_stream_sales()
@@ -30,4 +28,5 @@ class SalesPipe(object):
         teste = self.join_sales_payment_type.process(df_sales, df_payment_type)
 
         teste.show()
+
         
