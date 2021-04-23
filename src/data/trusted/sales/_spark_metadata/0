@@ -1,0 +1,2 @@
+v1
+{"path":"file:///C:/Projetos/PySpark/CollectorWithKafka/src/data/trusted/sales/dt_partition=20210420/part-00000-d4e27eed-d3ee-438f-bb51-d9730f98c267.c000.snappy.parquet","size":1780,"isDir":false,"modificationTime":1618971219627,"blockReplication":1,"blockSize":33554432,"action":"add"}
