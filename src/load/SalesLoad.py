@@ -24,7 +24,7 @@ class SalesLoad(object):
             self.spark_session.readStream.format("kafka")
                 .option("kafka.bootstrap.servers",config("KAFKA_BOOTSTRAP_SERVERS"))
                 .option("subscribe", config("KAFKA_TOPIC"))
-                .option("startingOffsets", config("KAFKA_OFFSET_RESET_START_OFFSET"))
+                .option("startingOffsets", "{\"teste\":{\"0\":141}}")
                 .option("session.timeout.ms", config("KAFKA_SESSION_TIMEOUT_MS"))
                 .option("heartbeat.interval.ms", config("KAFKA_HEARTBEAT_INTERVAL_MS"))
                 .option("request.timeout.ms", config("KAFKA_REQUEST_TIMEOUT"))

@@ -1,32 +1,41 @@
-from pyspark.sql import functions as F
-
+from pyspark.sql.functions import col, lit
 from src.load.SalesLoad import SalesLoad
 from src.save.SalesSave import SalesSave
 from src.quality.SalesQuality import SalesQuality
 from src.load.PaymentTypeLoad import PaymentTypeLoad
 from src.process.JoinSalesAndPaymentType import JoinSalesAndPaymentType
+from src.ingest.SalesIngest import SalesIngest
+from src.utils import log
 
 class SalesPipe(object):
     """Classe que contém todos os passos para a pipe SALES"""
 
-    def __init__(self, spark):
-        self.sales_load = SalesLoad(spark)
-        self.sales_save = SalesSave(spark)
-        self.sales_quality = SalesQuality(spark)
-        self.payment_type_load = PaymentTypeLoad(spark)
-        self.join_sales_payment_type = JoinSalesAndPaymentType(spark)
+    def __init__(self, spark, args):
+        self.spark_session = spark
+        self.args = args
+        self.df_sales = None
+        self.df_payment_type = None
+
+    def loadStep(self):
+        self.df_sales = SalesLoad(self.spark_session).read_stream_sales()
+        self.df_sales = self.df_sales.withColumn("dt_partition", lit(self.args[1]))
+        self.df_payment_type = PaymentTypeLoad(self.spark_session).load_payment_type()
+
+    def qualityStep(self):
+        self.df_sales = SalesQuality(self.spark_session).qualityData(self.df_sales)
+
+    def saveStep(self):
+        SalesSave(self.spark_session).save(self.df_sales)
+
+    def processStep(self):
+        self.df_sales = JoinSalesAndPaymentType(self.spark_session).process(self.df_sales, self.df_payment_type)
+
+    def ingestStep(self):
+        SalesIngest().save(self.df_sales)
 
     def start(self):
-        df_sales = self.sales_load.read_stream_sales()
-        df_sales = df_sales.withColumn("dt_partition", F.lit(20210420))
-        df_payment_type = self.payment_type_load.load_payment_type()
-
-        df_sales = self.sales_quality.qualityData(df_sales)
-
-        self.sales_save.save(df_sales)
-
-        teste = self.join_sales_payment_type.process(df_sales, df_payment_type)
-
-        teste.show()
-
-        
+        self.loadStep()
+        self.qualityStep()
+        self.saveStep()
+        self.processStep()
+        self.ingestStep()

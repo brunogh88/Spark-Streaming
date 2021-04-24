@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 spark_utils.py
 ~~~~~~~~
@@ -6,16 +5,14 @@ spark_utils.py
 Módulo que contém a função auxiliar para uso com o Apache Spark
 """
 from pyspark.sql import SparkSession
-from importlib import import_module
+from src.utils.config import config
 
-config = import_module("src.utils.config").config
-
-def get_spark_session(module):
+def get_spark_session(pipe):
     """
     Inicia uma sessão do spark
 
     :return: SparkSession
     """
     return SparkSession.builder.appName(
-        config("APP_NAME")+"_"+module
+        config("APP_NAME")+"_"+pipe
     ).getOrCreate()

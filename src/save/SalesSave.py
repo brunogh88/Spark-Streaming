@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
+from src.utils.config import config
+from src.utils.hdfs_utils import HdfsUtils
 
-from importlib import import_module
-
-config = import_module("src.utils.config").config
-
-
-class SalesSave():
+class SalesSave(object):
     """
     Classe responsável por fazer a persistencia do
     stream no HDFS
@@ -20,14 +16,12 @@ class SalesSave():
 
         :param df:
         """
-        dfs = (
-            df.writeStream.queryName("sales-test")
-                .outputMode(config("SPARK_TRUSTED_MODE"))
-                .partitionBy("dt_partition")
-                .format(config("SPARK_TRUSTED_FORMAT"))
-                .option("path", config("SPARK_TRUSTED_PATH") + config("SALES_PATH"))
-                .option("checkpointLocation", config("SPARK_TRUSTED_PATH") + config("SALES_PATH") + config("CHECKPOINT_PATH"))
-                .option("truncate", False)
-                .start()
-        )
-        dfs.awaitTermination()
+        HdfsUtils(None).writeStream(
+            df=df, 
+            path=config("SPARK_TRUSTED_PATH") + config("SALES_PATH"),
+            format=config("SPARK_TRUSTED_FORMAT"),
+            partition_name="dt_partition",
+            save_mode=config("SPARK_TRUSTED_MODE"),
+            check_point_path=config("SPARK_TRUSTED_PATH") + config("SALES_PATH") + config("CHECKPOINT_PATH"),
+            query_name="sales-save-trusted"
+            )

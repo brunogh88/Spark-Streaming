@@ -41,6 +41,11 @@ def config(key):
                 "CHECKPOINT_PATH" : "/checkpoint",
                 "SALES_PATH" : "/sales",
                 "CUSTOMER_PATH" : "/customer",
-                "PAYMENT_TYPE_PATH" : "/payment_type"
+                "PAYMENT_TYPE_PATH" : "/payment_type",
+
+                "SPARK_REFINED_PATH" : "./src/data/refined",
+
+                "SPARK_OVERWRITE_MODE" : "Overwrite",
+                "SPARK_PARQUET_FORMAT" : "parquet"
     }
     return config[key]
