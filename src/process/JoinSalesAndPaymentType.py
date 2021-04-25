@@ -2,8 +2,8 @@
 
 class JoinSalesAndPaymentType():
 
-    def __init__(self, spark_session):
-        self.spark_session = spark_session
+    def __init__(self):
+        pass
 
     def process(self, df_sales, df_payment_type):
         return df_sales.join(

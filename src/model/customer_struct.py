@@ -1,9 +1,7 @@
-from pyspark.sql.types import StructField, StructType, StringType, IntegerType, DateType
+from pyspark.sql.types import StructField, StructType, StringType, IntegerType
 
 def customer_struct():
     return StructType([
-        StructField("name", StringType(), True),
-        StructField("age", IntegerType(), True),
-        StructField("country", StringType(), True),
-        StructField("active", DateType(), True)
+        StructField("id", IntegerType(), True),
+        StructField("customerName", StringType(), True)
     ])

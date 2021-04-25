@@ -1,2 +1,2 @@
 v1
-{"path":"file:///C:/Projetos/PySpark/CollectorWithKafka/src/data/trusted/sales/dt_partition=20210420/part-00000-d00332ad-4fef-4175-a691-3647f80a749e.c000.snappy.parquet","size":1576,"isDir":false,"modificationTime":1618971227489,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///C:/Projetos/PySpark/Spark-Streaming/src/data/trusted/sales/dt_partition=20210424/part-00000-42b887d5-584f-43e9-9c1d-6a04fbabda2f.c000.snappy.parquet","size":1730,"isDir":false,"modificationTime":1619319568009,"blockReplication":1,"blockSize":33554432,"action":"add"}

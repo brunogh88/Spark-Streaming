@@ -1,11 +1,13 @@
 from pyspark.sql.functions import col, lit
 from src.load.SalesLoad import SalesLoad
+from src.load.PaymentTypeLoad import PaymentTypeLoad
 from src.save.SalesSave import SalesSave
 from src.quality.SalesQuality import SalesQuality
-from src.load.PaymentTypeLoad import PaymentTypeLoad
 from src.process.JoinSalesAndPaymentType import JoinSalesAndPaymentType
+from src.process.JoinSalesAndCustomer import JoinSalesAndCustomer
 from src.ingest.SalesIngest import SalesIngest
 from src.utils import log
+from src.load.CustomerLoad import CustomerLoad
 
 class SalesPipe(object):
     """Classe que contém todos os passos para a pipe SALES"""
@@ -15,11 +17,13 @@ class SalesPipe(object):
         self.args = args
         self.df_sales = None
         self.df_payment_type = None
+        self.df_customer = None
 
     def loadStep(self):
         self.df_sales = SalesLoad(self.spark_session).read_stream_sales()
-        self.df_sales = self.df_sales.withColumn("dt_partition", lit(self.args[1]))
+        self.df_sales = self.df_sales.withColumn("dt_partition", lit(self.args.date))
         self.df_payment_type = PaymentTypeLoad(self.spark_session).load_payment_type()
+        self.df_customer = CustomerLoad(self.spark_session).load()
 
     def qualityStep(self):
         self.df_sales = SalesQuality(self.spark_session).qualityData(self.df_sales)
@@ -28,7 +32,8 @@ class SalesPipe(object):
         SalesSave(self.spark_session).save(self.df_sales)
 
     def processStep(self):
-        self.df_sales = JoinSalesAndPaymentType(self.spark_session).process(self.df_sales, self.df_payment_type)
+        self.df_sales = JoinSalesAndPaymentType().process(self.df_sales, self.df_payment_type)
+        self.df_sales = JoinSalesAndCustomer().process(self.df_sales, self.df_customer)
 
     def ingestStep(self):
         SalesIngest().save(self.df_sales)
