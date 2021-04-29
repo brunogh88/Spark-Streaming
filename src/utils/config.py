@@ -14,11 +14,11 @@ def config(key):
     config = {
                 "APP_NAME" : 'sales-test',
 
-                "KAFKA_BOOTSTRAP_SERVERS" : 'localhost:29092',
+                "KAFKA_BOOTSTRAP_SERVERS" : 'localhost:9092',
                 "KAFKA_TOPIC" : 'teste',
                 "KAFKA_OFFSET_RESET_START_OFFSET": "earliest",
                 "KAFKA_TOPIC_LOG": "log-monitor",
-                "KAFKA_AUTHORIZATION_CLIENT_ID": "sales-test",
+                "KAFKA_AUTHORIZATION_CLIENT_ID": "sales",
                 "KAFKA_GROUP_ID": "sales-test",
                 "KAFKA_SESSION_TIMEOUT_MS": 30000,
                 "KAFKA_HEARTBEAT_INTERVAL_MS": 3000,
@@ -32,18 +32,18 @@ def config(key):
                 "KAFKA_MIN_BATCHES_RETAIN": 100,
 
                 "SPARK_RAW_FORMAT": "csv",
-                "SPARK_RAW_PAYMENT_TYPE_PATH": "./src/data/raw/payment_type",
+                "SPARK_RAW_PAYMENT_TYPE_PATH": "./src/resources/raw/payment_type",
 
                 "SPARK_TRUSTED_MODE" : "append",
                 "SPARK_TRUSTED_FORMAT" : "parquet",
-                "SPARK_TRUSTED_PATH" : "./src/data/trusted",
+                "SPARK_TRUSTED_PATH" : "./src/resources/trusted",
 
                 "CHECKPOINT_PATH" : "/checkpoint",
                 "SALES_PATH" : "/sales",
                 "CUSTOMER_PATH" : "/customer",
                 "PAYMENT_TYPE_PATH" : "/payment_type",
 
-                "SPARK_REFINED_PATH" : "./src/data/refined",
+                "SPARK_REFINED_PATH" : "./src/resources/refined",
 
                 "SPARK_OVERWRITE_MODE" : "Overwrite",
                 "SPARK_PARQUET_FORMAT" : "parquet"

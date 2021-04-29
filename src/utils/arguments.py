@@ -5,7 +5,10 @@ APP_DESCRIPTION = """>>> IMPORTANT <<< """
 
 HEL_PARAMETER_DATE= """You need to put a date in the format YYYYMMDD"""
 
-HEL_PARAMETER_PIPE= """Select a pipe name that you want to run between the: SALES or NAME_NEW_PIPE """
+HEL_PARAMETER_PIPE= """
+                    Select a pipe name that you want to run 
+                    between the: SALES or NAME_NEW_PIPE 
+                    """
 
 def get_args():
     parser = ArgumentParser(prog="Pipe-Teste", description=APP_DESCRIPTION, formatter_class=RawTextHelpFormatter)

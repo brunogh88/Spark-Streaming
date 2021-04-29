@@ -9,5 +9,9 @@ class SalesQuality():
     def qualityData(self, df):
         return (
             df
-                .withColumn("id", F.when(F.col("id").isNull(), F.lit(-99999)).otherwise(F.col("id")))
+                .withColumn(
+                    "id",
+                    F.when(F.col("id").isNull(), F.lit(-99999))
+                    .otherwise(F.col("id")))
         )
+        

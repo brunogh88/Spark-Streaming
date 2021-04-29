@@ -9,7 +9,7 @@ class SalesIngest(object):
 
     def save(self, df):
         log.info("Gravando no Refined")
-        HdfsUtils(None).writeTriggerOnceStream(
+        HdfsUtils(None).writeStream(
             df=df, 
             path=config("SPARK_REFINED_PATH")+config("SALES_PATH"),
             format=config("SPARK_PARQUET_FORMAT"),

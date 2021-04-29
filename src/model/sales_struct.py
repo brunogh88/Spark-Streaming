@@ -9,3 +9,4 @@ def sales_struct():
         StructField("productName", StringType(), True),
         StructField("amount", DoubleType(), True)
     ])
+    

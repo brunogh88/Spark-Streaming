@@ -1,0 +1,2 @@
+v1
+{"path":"file:///C:/Projetos/PySpark/Spark-Streaming/src/resources/trusted/sales/dt_partition=20210427/part-00000-9d837e01-51bb-4b51-babd-0a1eedcf9598.c000.snappy.parquet","size":1576,"isDir":false,"modificationTime":1619662807446,"blockReplication":1,"blockSize":33554432,"action":"add"}

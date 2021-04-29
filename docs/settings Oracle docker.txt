@@ -22,3 +22,5 @@
  Hostname: localhost
  Port: 1521
  Service name: ORCLCDB.localdomain
+
+ This step by step was in https://www.youtube.com/watch?v=ciYsDbBx80s
